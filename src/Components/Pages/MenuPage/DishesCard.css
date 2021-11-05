@@ -1,0 +1,57 @@
+.card{
+    margin-bottom: 20px;
+}
+
+.card img{
+    width: 100%;
+    height: 190px;
+}
+
+.card-title{
+    white-space: nowrap;
+}
+
+.card-text{
+    line-height: 1.5em;
+      height: 3em; 
+      overflow: hidden;
+}
+
+.card-footer{
+    display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.price{
+    color: red;
+    font-size: large;
+    font-weight: bold;
+}
+
+.card input::-webkit-outer-spin-button,
+.card input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.btn-quan{
+    width: 30px;
+    height: 30px;
+    background-color: tomato;
+    border: 0px;
+    font-weight: bold;
+    color: #ffffff;
+}
+.input-num{
+    text-align: center;
+}
+.card-body .input-number {
+    color: tomato;
+    width: 50px;
+    height: 30px;
+    border: 1px solid tomato;
+    border-radius: 0px;
+    text-align: center;
+    font-weight: bold;
+}

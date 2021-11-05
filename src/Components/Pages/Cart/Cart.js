@@ -4,21 +4,26 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ItemList from "./ItemList";
 import ItemData from "./ItemData";
 import DiscountCode from "./discountCode";
+import { DishesInCart } from "./CartData";
 
+export const addToCart = (dish, quantity) => {
+  DishesInCart.push({dish, quantity});
+  console.log(DishesInCart);
+}
 
 function Order() {
  
   const handleClose = (product) => {
-    const item = quantity.find((x) => x.id === product.id);
-    setQuantity(quantity.map((x) => x.id === item.id ? {...item, showed: !item.showed} : x));
+    const item = quantity.find((x) => x.dish.id === product.dish.id);
+    setQuantity(quantity.map((x) => x.dish.id === item.dish.id ? {...item, showed: !item.showed} : x));
   }
   const handleShow = (product) => {
-    const item = quantity.find((x) => x.id === product.id);
-    setQuantity(quantity.map((x) => x.id === item.id ? {...item, showed: true} : {...x, showed: false}));
+    const item = quantity.find((x) => x.dish.id === product.dish.id);
+    setQuantity(quantity.map((x) => x.dish.id === item.dish.id ? {...item, showed: true} : {...x, showed: false}));
 
   }
   
-  const [quantity, setQuantity] = useState(ItemData);
+  const [quantity, setQuantity] = useState(DishesInCart);
   
   const [price, setPrice] = useState(0);
 
@@ -34,23 +39,23 @@ function Order() {
 
   
   const onAdd = (product) => {
-    const item = quantity.find((x) => x.id === product.id);
-    setQuantity(quantity.map((x) => x.id === product.id ? {...item, qty: item.qty + 1} : x));
+    const item = quantity.find((x) => x.dish.id === product.dish.id);
+    setQuantity(quantity.map((x) => x.dish.id === product.dish.id ? {...item, quantity: item.quantity + 1} : x));
     if (product.check === true) {
-      setPrice(price + product.price);
-      setFinalPrice(finalPrice + product.price);
+      setPrice(price + product.dish.price);
+      setFinalPrice(finalPrice + product.dish.price);
     }
   };
   const onRemove = (product) => {
-    const item = quantity.find((x) => x.id === product.id);
-    if (item.qty === 1) {
+    const item = quantity.find((x) => x.dish.id === product.dish.id);
+    if (item.quantity === 1) {
       handleShow(product);
       //setQuantity(quantity.filter((x) => x.id !== product.id)); 
     } else {
-      setQuantity(quantity.map((x) => x.id === product.id ? {...item, qty: item.qty - 1} : x));
+      setQuantity(quantity.map((x) => x.dish.id === product.dish.id ? {...item, quantity: item.quantity - 1} : x));
       if (product.check === true) {
-        setPrice(price - product.price);
-        setFinalPrice(finalPrice - product.price);
+        setPrice(price - product.dish.price);
+        setFinalPrice(finalPrice - product.dish.price);
       }
     }
     
@@ -59,13 +64,13 @@ function Order() {
     let a = document.getElementsByClassName("check-all-items");
     let b = document.getElementsByClassName("check-item");
     let isAllChecked = 0;
-    setQuantity(quantity.filter((x) => x.id !== product.id));
+    setQuantity(quantity.filter((x) => x.dish.id !== product.dish.id));
     if (product.check === true) {
-      setPrice(price - product.price * product.qty);
-      setFinalPrice(finalPrice - product.price * product.qty);
+      setPrice(price - product.dish.price * product.quantity);
+      setFinalPrice(finalPrice - product.dish.price * product.quantity);
     }
     for (let i of b) {
-      if ((i.checked === true && i.value !== product.id) || (i.value === product.id)) {
+      if ((i.checked === true && i.value !== product.dish.id) || (i.value === product.dish.id)) {
         isAllChecked += 1;
       }
       if (isAllChecked === b.length) {
@@ -76,21 +81,21 @@ function Order() {
   }
 
   const onPurchase = (product, e) => {
-    const item = quantity.find((x) => x.id === product.id);
+    const item = quantity.find((x) => x.dish.id === product.dish.id);
     const checked = e.target.checked;
     let a = document.getElementsByClassName("check-all-items");
     let b = document.getElementsByClassName("check-item");
     let isAllChecked = 0;
 
     if (checked === true) {
-      setPrice(price + product.price * product.qty);
-      setFinalPrice(finalPrice + product.price * product.qty);
-      setQuantity(quantity.map((x) => x.id === product.id ? {...item, check: true} : x));
+      setPrice(price + product.dish.price * product.quantity);
+      setFinalPrice(finalPrice + product.dish.price * product.quantity);
+      setQuantity(quantity.map((x) => x.dish.id === product.dish.id ? {...item, check: true} : x));
     } else {
       a[0].checked = false;
-      setPrice(price - product.price * product.qty);
-      setFinalPrice(finalPrice - product.price * product.qty);
-      setQuantity(quantity.map((x) => x.id === product.id ? {...item, check: !item.check} : x));
+      setPrice(price - product.dish.price * product.quantity);
+      setFinalPrice(finalPrice - product.dish.price * product.quantity);
+      setQuantity(quantity.map((x) => x.dish.id === product.dish.id ? {...item, check: !item.check} : x));
     }
 
     for (let i of b) {
@@ -109,9 +114,9 @@ function Order() {
     if (checked === true) {
       for (let i of x) {
         for (let j of quantity) {
-          if (i.value === j.id && i.checked === false) {
+          if (i.value === j.dish.id && i.checked === false) {
             i.checked = true;
-            itemPrice = itemPrice + j.price * j.qty;
+            itemPrice = itemPrice + j.dish.price * j.quantity;
             j.check = true;
           }
         }
@@ -129,8 +134,16 @@ function Order() {
       setFinalPrice(0);
     }
   }
-  
+  if (DishesInCart.length === 0) {
+    return (
+      <div className="cart-empty">
+        <h1>Cart is Empty</h1>
+        <p>Please go to menu and select dishes and enjoy our website</p>
+      </div>
+    )
+  } else {
   return (
+    
     <div className="cart-bg">
       <div className="cart-header">
         <h1 className="fw-normal">Giỏ hàng của bạn</h1>
@@ -221,7 +234,7 @@ function Order() {
         </div>
       </div>
     </div>
-  );
+  )}
 }
 
 export default Order;

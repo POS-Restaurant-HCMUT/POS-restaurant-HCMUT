@@ -7,6 +7,11 @@ export default function ItemList(props) {
   if (products.length === 0) {
     a[0].checked = false;
   }
+  // for (let i of products) {
+  //   if (products[products.length - 1].dish.id === i.dish.id) {
+  //     return
+  //   }
+  // }
   return (
     <div>
       <div>

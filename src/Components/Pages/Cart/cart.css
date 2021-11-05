@@ -28,6 +28,18 @@
     padding: 0 0.5rem;
 }
 
+.abcd-e .small {
+    width: 70%;
+    height: 50%;
+}
+
+.cart-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 11rem 0;
+}
+
 .scrollspy-example {
     position: relative;
     height: 380px;
