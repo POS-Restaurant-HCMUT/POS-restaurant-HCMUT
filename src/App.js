@@ -4,13 +4,13 @@ import Navbar from "./Components/Navbar/Navbar";
 import Home from "./Components/Pages/Home";
 import Demo from "./Components/Pages/SignIn";
 import "./App.css";
-import ViewMenu from "./Components/Pages/ViewMenu";
-import Cart from "./Components/Pages/Cart";
+import ViewMenu from "./Components/Pages/MenuPage/ViewMenu";
+import Cart from "./Components/Pages/Cart/Cart";
 import AboutUs from "./Components/Pages/AboutUs";
 
 function App() {
   return (
-    <div className="container">
+    <div className="container1">
       <Router>
         <Navbar />
         <Switch>

@@ -4,17 +4,18 @@
   box-sizing: border-box;
   font-family: "Montserrat", sans-serif;
 }
-.container {
-  background: url("./Components/img/bg.jpg");
+.container1 {
+  background:  url("./Components/img/bg.jpg");
   background-position: center;
   background-size: cover;
   width: 100%;
   height: 100vh;
   position: relative;
-  overflow: hidden;
+  overflow-y:scroll;
+  background-attachment: fixed;
 }
 
-.container::after {
+.container1::after {
   content: "";
   background: rgba(0, 0, 0, 0.6);
   width: 100%;
