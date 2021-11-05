@@ -1,0 +1,19 @@
+footer {
+    height: fit-content;
+    background-color: black;
+    color: white;
+    padding: 1rem 1rem;
+    margin-top: 4rem;
+}
+
+footer span {
+    color: tomato;
+}
+
+.member {
+    padding: 0 1.5rem;
+}
+
+.social p {
+    margin-right: 2rem;
+}

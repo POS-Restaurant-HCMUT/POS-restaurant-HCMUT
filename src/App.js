@@ -7,10 +7,15 @@ import "./App.css";
 import ViewMenu from "./Components/Pages/ViewMenu";
 import Cart from "./Components/Pages/Cart";
 import AboutUs from "./Components/Pages/AboutUs";
+import Footer from "./Components/Footer/Footer";
+//import 'bootstrap/dist/css/bootstrap.min.css';
+// import $ from'jquery';
+// import Popper from'popper.js';
+// import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 function App() {
   return (
-    <div className="container">
+    <div className="container1">
       <Router>
         <Navbar />
         <Switch>
@@ -20,6 +25,7 @@ function App() {
           <Route path="/about-us" exact component={AboutUs} />
           <Route path="/demo" exact component={Demo} />
         </Switch>
+        <Footer />
       </Router>
     </div>
   );

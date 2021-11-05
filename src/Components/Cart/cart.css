@@ -1,0 +1,36 @@
+.cart-bg .cart-header {
+    margin-left: 2rem;
+    margin-top: 2rem;
+}
+
+.cart-bg .discount-code {
+    background-color: #f8faf8;
+}
+
+.cart-bg .total-cost {
+    background-color: #f8faf8;
+}
+
+.cart-bg .purchase-btn button:hover {
+    background-color: orange;
+    border: 1px solid orange;
+}
+
+.row {
+    margin-right: 0 !important;
+}
+
+.delete-item {
+    cursor: pointer;
+}
+
+.itemQuantity {
+    padding: 0 0.5rem;
+}
+
+.scrollspy-example {
+    position: relative;
+    height: 380px;
+    margin-top: .5rem;
+    overflow: scroll;
+}

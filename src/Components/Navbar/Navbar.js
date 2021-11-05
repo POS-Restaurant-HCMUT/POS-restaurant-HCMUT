@@ -3,6 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import { MenuList } from "./MenuList";
 import "./Navbar.css";
 import image from "../img/logo.png"
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Navbar = () => {
   const [clicked, setClicked] = useState(false);
@@ -21,7 +22,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav>
+    <nav className="sticky-top">
       <div className="logo">
         <Link to="/" className="homepage">
           <img src={image} alt="img" className="mini-logo"/>
