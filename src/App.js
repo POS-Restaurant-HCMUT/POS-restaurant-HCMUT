@@ -5,7 +5,7 @@ import Home from "./Components/Pages/Home";
 import Demo from "./Components/Pages/SignIn";
 import "./App.css";
 import ViewMenu from "./Components/Pages/ViewMenu";
-import Cart from "./Components/Pages/Cart";
+import Cart from "./Components/Pages/Cart/Cart";
 import AboutUs from "./Components/Pages/AboutUs";
 import Footer from "./Components/Footer/Footer";
 //import 'bootstrap/dist/css/bootstrap.min.css';

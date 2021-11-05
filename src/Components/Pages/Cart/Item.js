@@ -1,6 +1,6 @@
 import React from "react";
-import "../Cart/cart.css";
-import Popup from "../Cart/Popup";
+import "./cart.css";
+import Popup from "./Popup";
 
 export default function Item(props) {
     const { product, onAdd, onRemove, onPurchase, deleteItem, handleShow, handleClose } = props;

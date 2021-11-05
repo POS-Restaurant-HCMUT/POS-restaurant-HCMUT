@@ -1,9 +1,9 @@
 import React, {useState} from "react";
-import "../Cart/cart.css";
+import "./cart.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ItemList from "../Cart/ItemList";
-import ItemData from "../Cart/ItemData";
-import DiscountCode from "../Cart/discountCode";
+import ItemList from "./ItemList";
+import ItemData from "./ItemData";
+import DiscountCode from "./discountCode";
 
 
 function Order() {
