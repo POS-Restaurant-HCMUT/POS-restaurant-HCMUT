@@ -6,8 +6,25 @@ import DiscountCode from "./discountCode";
 import { DishesInCart } from "./CartData";
 
 export const addToCart = (dish, quantity) => {
-  DishesInCart.push({dish, quantity});
-  console.log(DishesInCart);
+  let isDeleted = false;
+  let a = false;
+  for (let i = 0; i < DishesInCart.length; i++) {
+    if (DishesInCart[i].isDeleted === true) {
+      DishesInCart.splice(i, 1);
+    }
+  }
+  if (DishesInCart.length > 0) {
+    for (let i of DishesInCart) {
+      if (i.dish.id === dish.id) {
+        i.quantity += quantity;
+        a = true;
+        break;
+      }
+    }
+  }
+  if (a === false) {
+    DishesInCart.push({dish, quantity, isDeleted});
+  }
 }
 
 function Order() {
@@ -64,6 +81,11 @@ function Order() {
     let b = document.getElementsByClassName("check-item");
     let isAllChecked = 0;
     setQuantity(quantity.filter((x) => x.dish.id !== product.dish.id));
+    for (let i of DishesInCart) {
+      if (product.dish.id === i.dish.id) {
+        i.isDeleted = true;
+      } 
+    }
     if (product.check === true) {
       setPrice(price - product.dish.price * product.quantity);
       setFinalPrice(finalPrice - product.dish.price * product.quantity);

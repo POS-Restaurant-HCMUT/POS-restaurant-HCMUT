@@ -79,5 +79,25 @@
     background-color: tomato;
     border-color: tomato;
     font-size: larger;
-    border-radius: 50%;
+}
+
+.cart-bg .input-number {
+    color: tomato;
+    width: 50px;
+    height: 30px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.cart-bg .abcd-e input {
+    border: none;
+}
+
+.btn-qty{
+    width: 30px;
+    height: 30px;
+    background-color: tomato;
+    border: 0px;
+    font-weight: bold;
+    color: #ffffff;
 }

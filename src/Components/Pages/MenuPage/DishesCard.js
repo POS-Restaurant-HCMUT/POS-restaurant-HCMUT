@@ -4,12 +4,12 @@ import './DishesCard.css';
 
 
 export function DishesCard(props) {
-    const [quantity, setQuantity] = useState(0);
+    const [quantity, setQuantity] = useState(1);
     
     let setQuantityUtl = (quan)=>{
         setQuantity(quan);
-        if(quan<0){
-            setQuantity(0);
+        if(quan<1){
+            setQuantity(1);
         }
     }
 

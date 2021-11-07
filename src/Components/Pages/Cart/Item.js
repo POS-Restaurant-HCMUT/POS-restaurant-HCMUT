@@ -16,13 +16,9 @@ export default function Item(props) {
             </div>
             <div className="col-md-2">${product.dish.price}</div>
             <div className="col-md-3 qty-btn">
-                <button onClick={() => onRemove(product)} className="btn btn-primary">
-                    -
-                </button>
-                <span className="itemQuantity"> {product.quantity} </span>
-                <button onClick={() => onAdd(product)} className="btn btn-primary">
-                    +
-                </button>
+                <button onClick={() => onRemove(product)} className="btn-qty">-</button>
+                <input className="input-number" type='number' value={product.quantity} disabled='disabled'/>
+                <button onClick={() => onAdd(product)} className="btn-qty">+</button>
             </div>
             <div className="col-md-2">
                 <div>${totalPrice}</div>
