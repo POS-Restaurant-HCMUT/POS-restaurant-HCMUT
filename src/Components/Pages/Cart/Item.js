@@ -14,14 +14,14 @@ export default function Item(props) {
                 <div className="fw-bold">{product.dish.name}</div></label>
                 <div>{product.dish.desc}</div>
             </div>
-            <div className="col-md-2">${product.dish.price}</div>
+            <div className="col-md-2">{product.dish.price} VNĐ</div>
             <div className="col-md-3 qty-btn">
                 <button onClick={() => onRemove(product)} className="btn-qty">-</button>
                 <input className="input-number" type='number' value={product.quantity} disabled='disabled'/>
                 <button onClick={() => onAdd(product)} className="btn-qty">+</button>
             </div>
             <div className="col-md-2">
-                <div>${totalPrice}</div>
+                <div>{totalPrice} VNĐ</div>
             </div>
             <div className="col-md-1 delete-item">
                 <i className="far fa-trash-alt" onClick={() => handleShow(product)}></i>

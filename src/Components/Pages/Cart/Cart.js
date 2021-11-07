@@ -233,11 +233,11 @@ function Order() {
             <div className="card-body">
               <div className="d-flex justify-content-between">
                 <p>Tạm tính:</p>
-                <p>{price}đ</p>
+                <p>{price} VNĐ</p>
               </div>
               <div className="d-flex justify-content-between">
                 <p>Giảm giá:</p>
-                <p>{price-finalPrice}đ</p>
+                <p>{price-finalPrice} VNĐ</p>
               </div>
               <hr></hr>
               <div className="d-flex justify-content-between">
@@ -245,7 +245,7 @@ function Order() {
                   <div>Tổng tiền:</div>
                   <div>(Bao gồm VAT)</div>
                 </div>
-                <p>{price*110/100 - (price-finalPrice)}đ</p>
+                <p>{price*110/100 - (price-finalPrice)} VNĐ</p>
               </div>
             </div>
           </div>
