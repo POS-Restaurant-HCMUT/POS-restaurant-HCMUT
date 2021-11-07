@@ -8,14 +8,14 @@ export default function Item(props) {
     var totalPrice = product.quantity * product.dish.price;
     return (
         <div className="row align-items-center abcd-e">
-            <div className="form-check col-md-4 ps-10">
+            <div className="form-check col-md-4 ps-5">
                 <input className="form-check-input item-checked check-item" type="checkbox" value={product.dish.id} id="formCheckDefault" onClick={(e) => onPurchase(product, e)} />
                 <label className="form-check-label" for="formCheckDefault"><img className="small" src={product.dish.img} alt={product.dish.name} />
                 <div className="fw-bold">{product.dish.name}</div></label>
                 <div>{product.dish.desc}</div>
             </div>
             <div className="col-md-2">${product.dish.price}</div>
-            <div className="col-md-3">
+            <div className="col-md-3 qty-btn">
                 <button onClick={() => onRemove(product)} className="btn btn-primary">
                     -
                 </button>

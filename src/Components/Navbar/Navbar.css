@@ -90,7 +90,7 @@ ul {
   background-color: red;
 }
 
-@media screen and (max-width: 990px) {
+@media screen and (max-width: 1010px) {
   .mini-logo {
     width: 40px;
   }
@@ -103,7 +103,7 @@ ul {
   }
 }
 
-@media screen and (max-width: 810px) {
+@media screen and (max-width: 850px) {
   .menu-icon {
     display: flex;
     align-items: center;

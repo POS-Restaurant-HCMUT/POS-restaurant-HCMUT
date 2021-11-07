@@ -2,7 +2,6 @@ import React, {useState} from "react";
 import "./cart.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ItemList from "./ItemList";
-import ItemData from "./ItemData";
 import DiscountCode from "./discountCode";
 import { DishesInCart } from "./CartData";
 
@@ -154,14 +153,14 @@ function Order() {
           <div className="card mt-3 ms-5 cart-left-header">
             <div className="card-header">
               <div className="row">
-                <div className="form-check col-md-4 ps-10">
+                <div className="form-check col-md-4 ps-5">
                   <input className="form-check-input check-all-items" type="checkbox" value="" id="formCheckDefault" onClick={(e) => checkAllItem(e)} />
-                  <label className="form-check-label" for="formCheckDefault">Tất cả</label>
+                  <label className="form-check-label fw-bold" for="formCheckDefault">Tất cả</label>
                 </div>
-                <div className="col-md-2">Đơn giá</div>
-                <div className="col-md-3">Số lượng</div>
-                <div className="col-md-2">Thành tiền</div>
-                <div className="col-md-1"> </div>
+                <div className="col-md-2 fw-bold">Đơn giá</div>
+                <div className="col-md-3 fw-bold">Số lượng</div>
+                <div className="col-md-2 fw-bold">Thành tiền</div>
+                <div className="col-md-1 fw-bold"> </div>
               </div>
             </div>
             <div className="card-body scrollspy-example" data-bs-spy="scroll">
@@ -170,7 +169,7 @@ function Order() {
           </div>
         </div>
         <div className="col-md-4">
-          <div className="card me-5 discount-code mt-3">
+          <div className="card me-5 ms-3 discount-code mt-3">
             <form className="card-body">
               <label>Mã giảm giá (nếu có)</label>
               <input type="text" name="discount" onChange={event => setDiscount(event.target.value)} className="form-control" ></input>
@@ -207,7 +206,7 @@ function Order() {
             </form>
           </div>
 
-          <div className="card me-5 mt-3 total-cost">
+          <div className="card me-5 ms-3 mt-3 total-cost">
             <div className="card-body">
               <div className="d-flex justify-content-between">
                 <p>Tạm tính:</p>
@@ -228,7 +227,7 @@ function Order() {
             </div>
           </div>
 
-          <div className="card me-5 mt-3 purchase-btn">
+          <div className="card me-5 ms-3 mt-3 purchase-btn">
             <button type="button" className="btn btn-success card-body fs-5 fw-bold">Thanh toán ngay</button>
           </div>
         </div>

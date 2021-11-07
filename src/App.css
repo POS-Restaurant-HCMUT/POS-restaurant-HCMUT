@@ -5,7 +5,7 @@
   font-family: "Montserrat", sans-serif;
 }
 
-/* .container1 {
+.container1 {
   background: url("./Components/img/bg.jpg");
   background-position: center;
   background-size: cover;
@@ -16,7 +16,7 @@
   background-attachment: fixed;
 }
 
-.container1::after {
+/* .container1::after {
   content: "";
   background: rgba(0, 0, 0, 0.6);
   width: 100%;
@@ -27,7 +27,7 @@
   right: 0;
   bottom: 0;
   z-index: 0;
-}*/
+} */
 .page-heading {
   display: flex;
   justify-content: center;
@@ -35,15 +35,46 @@
   min-height: 80vh;
   position: relative;
   z-index: 2;
+  text-align: center;
 }
 
 .page-heading h1 {
   font-size: 5rem;
   color: #fff;
-  font-weight: 300;
+  font-weight: 400;
   background: rgba(0, 0, 0, 0.5);
   padding: 0px 20px;
   border-radius: 2px;
+}
+
+.page-heading span {
+  color: tomato;
+}
+
+.page-aboutUs {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.page-aboutUs h1 {
+  font-size: 5rem;
+  color: #fff;
+  font-weight: 400;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 0px 20px;
+  border-radius: 2px;
+}
+
+.page-aboutUs p {
+  color: #fff;
+  font-size: 1.5rem;
+  background: rgba(0, 0, 0, 0.5);
 }
 
 @media screen and (max-width: 600px) {
