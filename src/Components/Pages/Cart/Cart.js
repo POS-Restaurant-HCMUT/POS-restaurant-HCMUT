@@ -8,11 +8,7 @@ import { DishesInCart } from "./CartData";
 export const addToCart = (dish, quantity) => {
   let isDeleted = false;
   let a = false;
-  for (let i = 0; i < DishesInCart.length; i++) {
-    if (DishesInCart[i].isDeleted === true) {
-      DishesInCart.splice(i, 1);
-    }
-  }
+  
   if (DishesInCart.length > 0) {
     for (let i of DishesInCart) {
       if (i.dish.id === dish.id) {
@@ -85,6 +81,11 @@ function Order() {
       if (product.dish.id === i.dish.id) {
         i.isDeleted = true;
       } 
+    }
+    for (let i = 0; i < DishesInCart.length; i++) {
+      if (DishesInCart[i].isDeleted === true) {
+        DishesInCart.splice(i, 1);
+      }
     }
     if (product.check === true) {
       setPrice(price - product.dish.price * product.quantity);
