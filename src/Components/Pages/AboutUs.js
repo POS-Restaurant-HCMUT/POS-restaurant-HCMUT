@@ -2,14 +2,71 @@ import React from "react";
 function AboutUs() {
   return (
     <div className="page-aboutUs">
-      <h1>About us</h1>
-      <p>Nguyen Hoai Thuong - 1912184</p>
-      <p>Nguyen Hong Dan - 1910916</p>
-      <p>Nguyen Duy Uyen - 1912410</p>
-      <p>Truong Viet Hoang - 1911207</p>
-      <p>Truong Gia Thinh - 1915329</p>
-      <p>Le Manh Hung - 1911283</p>
-      <p>Tran Van Thai - 1915121</p>
+      <div className="card">
+        <div className="card-header">
+          <h1>About us</h1>
+        </div>
+        <div className="card-body">
+          <div className="row">
+            <div className="col-lg-9">
+              <p>Nguyen Hoai Thuong</p>
+            </div>
+            <div className="col-lg-3">
+              <p>1912184</p>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-9">
+              <p>Nguyen Hong Dan</p>
+            </div>
+            <div className="col-lg-3">
+              <p>1910916</p>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-9">
+              <p>Nguyen Duy Uyen</p>
+            </div>
+            <div className="col-lg-3">
+              <p>1912410</p>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-9">
+              <p>Truong Viet Hoang</p>
+            </div>
+            <div className="col-lg-3">
+              <p>1911207</p>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-9">
+              <p>Truong Gia Thinh</p>
+            </div>
+            <div className="col-lg-3">
+              <p>1915329</p>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-9">
+              <p>Le Manh Hung</p>
+            </div>
+            <div className="col-lg-3">
+              <p>1911283</p>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-9">
+              <p>Tran Van Thai</p>
+            </div>
+            <div className="col-lg-3">
+              <p>1915121</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      
     </div>
   );
 }

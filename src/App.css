@@ -51,6 +51,10 @@
   color: tomato;
 }
 
+.page-aboutUs .card {
+  width: 600px;
+}
+
 .page-aboutUs {
   display: flex;
   flex-direction: column;
@@ -59,22 +63,19 @@
   min-height: 80vh;
   position: relative;
   z-index: 2;
-  text-align: center;
 }
 
 .page-aboutUs h1 {
-  font-size: 5rem;
+  font-size: 4rem;
   color: #fff;
   font-weight: 400;
-  background: rgba(0, 0, 0, 0.5);
-  padding: 0px 20px;
+  padding: 0px;
   border-radius: 2px;
 }
 
 .page-aboutUs p {
-  color: #fff;
+  color: #000;
   font-size: 1.5rem;
-  background: rgba(0, 0, 0, 0.5);
 }
 
 @media screen and (max-width: 600px) {

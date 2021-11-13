@@ -87,7 +87,9 @@ ul {
 }
 
 .menu-list li:last-child a.active {
-  background-color: red;
+  background-color: white;
+  font-weight: 500;
+  color: tomato;
 }
 
 @media screen and (max-width: 1010px) {
