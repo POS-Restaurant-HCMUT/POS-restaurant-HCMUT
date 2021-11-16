@@ -146,4 +146,8 @@ def pay(request):
         orderItem.save()
     return HttpResponse(status=200)
 
-    
+@csrf_exempt
+def payment(request):
+    data = JSONParser().parse(request)
+    print(data)
+    return HttpResponse(status=200) 

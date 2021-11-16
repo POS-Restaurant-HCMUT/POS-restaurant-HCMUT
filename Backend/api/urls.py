@@ -7,4 +7,5 @@ urlpatterns = [
     path('api/account/signup', customer_signup, name='signup'),
     path('api/update-cart', update_cart, name="update_cart"),
     path('api/pay', pay, name='pay'),
+    path('api/payment', payment, name='payment'),
 ]

@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ItemList from "./ItemList";
 import DiscountCode from "./discountCode";
 import { DishesInCart } from "./CartData";
+import Paypal from './Paypal'
 
 export const addToCart = (dish, quantity) => {
   let isDeleted = false;
@@ -49,6 +50,7 @@ function Order() {
 
   const [codeAdded, setCodeAdded] = useState('');
 
+  const [checkout, setCheckout] = useState(false);
   
   const onAdd = (product) => {
     const item = quantity.find((x) => x.dish.id === product.dish.id);
@@ -250,8 +252,10 @@ function Order() {
             </div>
           </div>
 
-          <div className="card me-5 ms-3 mt-3 purchase-btn">
-            <button type="button" className="btn btn-success card-body fs-5 fw-bold">Thanh toán ngay</button>
+          <div className="card me-5 ms-3 mt-3 div-purchase" onClick={()=>{if(finalPrice>0) setCheckout(true)}}>
+            {checkout ? <Paypal amount={finalPrice} style={{backgroundColor:'#ffefec', borderRadius: '25px'}}/>:
+            <button type="button" className="btn btn-success card-body fs-5 fw-bold purchase-btn" 
+                  >Thanh toán ngay</button>}
           </div>
         </div>
       </div>
