@@ -1,5 +1,24 @@
 {
   "dependencies": {
-    "axios": "^0.24.0"
-  }
+    "axios": "^0.24.0",
+    "validator": "^13.7.0"
+  },
+  "name": "pos-restaurant-hcmut",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/POS-Restaurant-HCMUT/POS-restaurant-HCMUT.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/POS-Restaurant-HCMUT/POS-restaurant-HCMUT/issues"
+  },
+  "homepage": "https://github.com/POS-Restaurant-HCMUT/POS-restaurant-HCMUT#readme",
+  "description": ""
 }
