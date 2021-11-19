@@ -239,6 +239,7 @@ function Order() {
       setFinalPrice(0);
     }
   }
+  console.log(DishesInCart)
   if (DishesInCart.length === 0) {
     return (
       <div className="cart-empty">
