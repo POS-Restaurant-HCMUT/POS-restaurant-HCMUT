@@ -2,7 +2,6 @@ import { useState } from 'react';
 import {addToCart} from '../Cart/Cart'
 import './DishesCard.css';
 
-
 export function DishesCard(props) {
     const [quantity, setQuantity] = useState(1);
     
