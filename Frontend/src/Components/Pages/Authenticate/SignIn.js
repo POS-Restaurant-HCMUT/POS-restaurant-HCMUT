@@ -14,7 +14,7 @@ function Demo() {
   const { accountLogin } = useContext(AccountContext);
 
   function requireLogin() {
-    //e.preventDefault();
+    
 
     axios
       .post("api/account/login", {
