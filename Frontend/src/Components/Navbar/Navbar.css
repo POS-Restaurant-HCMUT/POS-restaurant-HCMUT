@@ -113,7 +113,7 @@ ul {
   display: none;
 }
 
-@media screen and (max-width: 1010px) {
+@media screen and (max-width: 1100px) {
   .mini-logo {
     width: 40px;
   }

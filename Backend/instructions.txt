@@ -1,0 +1,81 @@
+- Truy xuất toàn bộ món ăn trong menu, vào link: 127.0.0.1:8000/api/menu => Trả về 1 file json, có định dạng:
+
+		{
+			"name": "<tên món ăn>",
+        			"category": <loại món ăn>, //là số nguyên, 0 là thức ăn, 1 là đồ uống, 2 là tráng miệng
+        			"desc": "<mô tả cho món ăn>",
+        			"img": "<paste link ảnh vào đây>",
+        			"price": <giá, là số nguyên>,
+        			"remain": <số lượng còn lại, là số nguyên>
+		}	
+
+
+- Thêm một món ăn vào menu: http://127.0.0.1:8000/api/menu, dùng POST method
+	Định dạng của json trong body của POST request: như trên
+	=> Trả về http status là 200 nếu thành công, 401 là thất bại
+
+
+- Lấy thông tin của một món ăn cụ thể, vào link: 127.0.0.1:8000/api/menu/<tên món ăn>, dùng GET method
+	Định dạng của file Json trả về: như trên :v (lưu ý, name là primary key)
+
+- Cập nhật thông tin của một món ăn, vào link: 127.0.0.1:8000/api/menu/<tên món ăn>
+	Định dạng của file Json gửi đi: như trên :v (lưu ý, name là primary key)\
+	=> Trả về http status là 200 nếu thành công, 401 là thất bại
+
+- Đăng nhập, dùng link: http://127.0.0.1:8000/api/login
+	Định dạng của file json:
+		{
+			"username": "<tài khoản>",
+			"password": "<mật khẩu>"
+		}
+
+- Đăng ký, dùng link: http://127.0.0.1:8000/api/signup
+	Định dạng của file json:
+		{
+			"username": "<tên tài khoản, unique>",
+			"password": "<mật khẩu>",
+			"fullName": "<Tên đầy đủ của người dùng>",
+			"email": "<email của người dùng>",
+			"phone" "<số điện thoại>":
+		}
+
+- Cập nhật giỏ hàng: Trả về http status 200 nếu thành công, 401 nếu thất bại
+    + Thêm hàng vào giỏ: Dùng POST method
+	Định dạng của file Json trong body:
+		{
+			"username": "<tài khỏa>",
+			"password": "<mật khẩu>",
+			"dish": "<tên món ăn>",
+			"quantity": "<số lượng của món>"
+		}
+    + Xóa hàng khỏi giỏ: Dùng DELETE method
+	Định dạng của file Json trong body:
+		{
+			"username": "<tài khỏa>",
+			"password": "<mật khẩu>",
+			"dish": "<tên món ăn>"
+		}
+    + Cập nhật số lượng của 1 món ăn trong giỏ: Dùng PUT method
+	Định dạng của file Json trong body:
+		{
+			"username": "<tài khỏa>",
+			"password": "<mật khẩu>",
+			"dish": "<tên món ăn>"
+			"quantity": "<số lượng mới của món>"
+		}
+
+- Thanh toán: trả về http status 200 nếu thành công, 401 nếu thất bại
+		{
+    			"username":"<tài khoản thanh toán>",
+    			"password":"<mật khẩu>",
+    			"item_list": [
+        				{
+            					"item_name":"<tên món thứ 1>",
+            					"quantity" : <số lượng món thứ 1>
+        				},
+        				{
+            					"item_name":"<tên món thứ n>",
+            					"quantity" : <số lượng món thứ n>
+        				}
+    			]
+		}

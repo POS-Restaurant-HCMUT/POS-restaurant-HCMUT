@@ -1,85 +1,144 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./cart.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ItemList from "./ItemList";
 import DiscountCode from "./discountCode";
 import axios from "axios";
-import { AccountContext } from "../../../context/accountContext";
-//import { DishesInCart } from "./CartData";
+import { useHistory } from "react-router-dom";
 
-export const addToCart = (dish, quantity) => {};
-//   let isDeleted = false;
-//   let a = false;
+//window.location.reload(false);
+let cartItems = [];
+let dishes = [];
+let userName = "";
+let passWord = "";
 
-//   if (DishesInCart.length > 0) {
-//     for (let i of DishesInCart) {
-//       if (i.dish.id === dish.id) {
-//         i.quantity += quantity;
-//         a = true;
-//         break;
-//       }
-//     }
-//   }
-//   if (a === false) {
-//     DishesInCart.push({dish, quantity, isDeleted});
-//   }
-// }
+const json = localStorage.getItem("account");
+const saveAccount = JSON.parse(json);
+if (saveAccount) {
+  userName = saveAccount.userName;
+  passWord = saveAccount.passWord;
+}
 
-function Order() {
-  const { account } = useContext(AccountContext);
-  const { userName, passWord } = account;
-  const [Cart, setCart] = useState([]);
-  const [DishesInCart, setDishesInCart] = useState([]);
-  
-  useEffect(() => {
-    axios
-    .post("http://127.0.0.1:8000/api/account/cart", {
-      username: userName,
-      password: passWord,
-    })
-    .then((res) => {
-      setCart(res.data);
-    });
-  }, [userName, passWord])
-  
+axios
+  .post("api/dishes-in-cart", {
+    username: userName,
+    password: passWord,
+  })
+  .then(function (response) {
+    if (response.status === 200) {
+      response.data.forEach(({ dish, quantity }) => {
+        cartItems.push({ dish, quantity });
+      });
+      axios
+        .get("/api/menu")
+        .then((res) => {
+          if (res.status === 200) {
+            res.data.forEach(({ name, desc, img, price }) => {
+              dishes.push({ name, desc, img, price });
+            });
+            for (let i = 0; i < cartItems.length; i++) {
+              for (let j = 0; j < dishes.length; j++) {
+                if (cartItems[i].dish === dishes[j].name) {
+                  cartItems[i] = { ...cartItems[i], dish: dishes[j] };
+                }
+              }
+            }
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+let DishesInCart = cartItems;
 
-  console.log("abc");
-  console.log(Cart);
-  //console.log(Cart[0].dish);
+export const addToCart = (dish, quantity) => {
+  if (userName === "" || passWord === "") {
+    alert("Please sign in to add to cart!");
+  } else {
+    let isDeleted = false;
+    let a = false;
 
-  useEffect(() => {
-    for (let i of Cart) {
-      let api = "http://127.0.0.1:8000/api/menu/" + i.dish ;
-      axios.get(api).then((res) => {
-        setDishesInCart(res.data);
-      })
+    if (DishesInCart.length > 0) {
+      for (let i of DishesInCart) {
+        if (i.dish.name === dish.name) {
+          i.quantity += quantity;
+          a = true;
+          axios
+            .put("api/update-cart", {
+              username: userName,
+              password: passWord,
+              dish: dish.name,
+              quantity: i.quantity,
+            })
+            .then(function (response) {
+              console.log(response);
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+          break;
+        }
+      }
     }
 
-  }, [Cart, userName, passWord])
+    if (a === false) {
+      DishesInCart.push({ dish, quantity, isDeleted });
+      axios
+        .post("api/update-cart", {
+          username: userName,
+          password: passWord,
+          dish: dish.name,
+          quantity: quantity,
+        })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+  }
+};
 
-  console.log(DishesInCart)
+function Order() {
+  // useEffect(() => {
+  //   const json1 = localStorage.getItem("account");
+  //   const saveAccount1 = JSON.parse(json1);
+  //   if (saveAccount1) {
+  //     userName = saveAccount1.userName;
+  //     passWord = saveAccount1.passWord;
+  //   }
+  // },[])
+  
+  const history = useHistory();
+  useEffect(() => {
+    if (userName === "" || passWord === "") {
+      alert("Please sign in to see your cart!");
+      history.push("/demo");
+    }
+  }, [history]);
 
   const handleClose = (product) => {
-    const item = quantity.find((x) => x.dish.id === product.dish.id);
+    const item = quantity.find((x) => x.dish.name === product.dish.name);
     setQuantity(
       quantity.map((x) =>
-        x.dish.id === item.dish.id ? { ...item, showed: !item.showed } : x
+        x.dish.name === item.dish.name ? { ...item, showed: !item.showed } : x
       )
     );
   };
   const handleShow = (product) => {
-    const item = quantity.find((x) => x.dish.id === product.dish.id);
+    const item = quantity.find((x) => x.dish.name === product.dish.name);
     setQuantity(
       quantity.map((x) =>
-        x.dish.id === item.dish.id
+        x.dish.name === item.dish.name
           ? { ...item, showed: true }
           : { ...x, showed: false }
       )
     );
   };
-
   const [quantity, setQuantity] = useState(DishesInCart);
-
   const [price, setPrice] = useState(0);
 
   const [finalPrice, setFinalPrice] = useState(0);
@@ -93,10 +152,10 @@ function Order() {
   const [codeAdded, setCodeAdded] = useState("");
 
   const onAdd = (product) => {
-    const item = quantity.find((x) => x.dish.id === product.dish.id);
+    const item = quantity.find((x) => x.dish.name === product.dish.name);
     setQuantity(
       quantity.map((x) =>
-        x.dish.id === product.dish.id
+        x.dish.name === product.dish.name
           ? { ...item, quantity: item.quantity + 1 }
           : x
       )
@@ -105,16 +164,30 @@ function Order() {
       setPrice(price + product.dish.price);
       setFinalPrice(finalPrice + product.dish.price);
     }
+    axios
+      .put("api/update-cart", {
+        username: userName,
+        password: passWord,
+        dish: product.dish.name,
+        quantity: product.quantity + 1,
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
   const onRemove = (product) => {
-    const item = quantity.find((x) => x.dish.id === product.dish.id);
+    const item = quantity.find((x) => x.dish.name === product.dish.name);
     if (item.quantity === 1) {
       handleShow(product);
-      //setQuantity(quantity.filter((x) => x.id !== product.id));
+
+      //setQuantity(quantity.filter((x) => x.name !== product.name));
     } else {
       setQuantity(
         quantity.map((x) =>
-          x.dish.id === product.dish.id
+          x.dish.name === product.dish.name
             ? { ...item, quantity: item.quantity - 1 }
             : x
         )
@@ -123,15 +196,28 @@ function Order() {
         setPrice(price - product.dish.price);
         setFinalPrice(finalPrice - product.dish.price);
       }
+      axios
+        .put("api/update-cart", {
+          username: userName,
+          password: passWord,
+          dish: product.dish.name,
+          quantity: product.quantity - 1,
+        })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     }
   };
   const deleteItem = (product) => {
     let a = document.getElementsByClassName("check-all-items");
     let b = document.getElementsByClassName("check-item");
     let isAllChecked = 0;
-    setQuantity(quantity.filter((x) => x.dish.id !== product.dish.id));
+    setQuantity(quantity.filter((x) => x.dish.name !== product.dish.name));
     for (let i of DishesInCart) {
-      if (product.dish.id === i.dish.id) {
+      if (product.dish.name === i.dish.name) {
         i.isDeleted = true;
       }
     }
@@ -146,8 +232,8 @@ function Order() {
     }
     for (let i of b) {
       if (
-        (i.checked === true && i.value !== product.dish.id) ||
-        i.value === product.dish.id
+        (i.checked === true && i.value !== product.dish.name) ||
+        i.value === product.dish.name
       ) {
         isAllChecked += 1;
       }
@@ -155,10 +241,17 @@ function Order() {
         a[0].checked = true;
       }
     }
+    axios.delete("api/update-cart", {
+      data: {
+        username: userName,
+        password: passWord,
+        dish: product.dish.name,
+      },
+    });
   };
 
   const onPurchase = (product, e) => {
-    const item = quantity.find((x) => x.dish.id === product.dish.id);
+    const item = quantity.find((x) => x.dish.name === product.dish.name);
     const checked = e.target.checked;
     let a = document.getElementsByClassName("check-all-items");
     let b = document.getElementsByClassName("check-item");
@@ -169,7 +262,7 @@ function Order() {
       setFinalPrice(finalPrice + product.dish.price * product.quantity);
       setQuantity(
         quantity.map((x) =>
-          x.dish.id === product.dish.id ? { ...item, check: true } : x
+          x.dish.name === product.dish.name ? { ...item, check: true } : x
         )
       );
     } else {
@@ -178,7 +271,9 @@ function Order() {
       setFinalPrice(finalPrice - product.dish.price * product.quantity);
       setQuantity(
         quantity.map((x) =>
-          x.dish.id === product.dish.id ? { ...item, check: !item.check } : x
+          x.dish.name === product.dish.name
+            ? { ...item, check: !item.check }
+            : x
         )
       );
     }
@@ -199,7 +294,7 @@ function Order() {
     if (checked === true) {
       for (let i of x) {
         for (let j of quantity) {
-          if (i.value === j.dish.id && i.checked === false) {
+          if (i.value === j.dish.name && i.checked === false) {
             i.checked = true;
             itemPrice = itemPrice + j.dish.price * j.quantity;
             j.check = true;
@@ -219,6 +314,7 @@ function Order() {
       setFinalPrice(0);
     }
   };
+  console.log(DishesInCart);
   if (DishesInCart.length === 0) {
     return (
       <div className="cart-empty">
@@ -234,11 +330,11 @@ function Order() {
         </div>
 
         <div className="row justify-content-md-center h-100">
-          <div className="col-md-8">
-            <div className="card mt-3 ms-5 cart-left-header">
+          <div className="col-lg-8 col-12 col-md-12 cart-left">
+            <div className="card mt-3 cart-left-header">
               <div className="card-header">
-                <div className="row">
-                  <div className="form-check col-md-4 ps-5">
+                <div className="row" id="header-cart">
+                  <div className="form-check col-md-4 ps-5 check-purchase">
                     <input
                       className="form-check-input check-all-items"
                       type="checkbox"
@@ -253,10 +349,10 @@ function Order() {
                       Tất cả
                     </label>
                   </div>
-                  <div className="col-md-2 fw-bold">Đơn giá</div>
-                  <div className="col-md-3 fw-bold">Số lượng</div>
-                  <div className="col-md-2 fw-bold">Thành tiền</div>
-                  <div className="col-md-1 fw-bold"> </div>
+                  <div className="col-md-2 fw-bold another-desc">Đơn giá</div>
+                  <div className="col-md-3 fw-bold another-desc">Số lượng</div>
+                  <div className="col-md-2 fw-bold another-desc">Thành tiền</div>
+                  <div className="col-md-1 fw-bold another-desc"> </div>
                 </div>
               </div>
               <div className="card-body scrollspy-example" data-bs-spy="scroll">
@@ -272,8 +368,8 @@ function Order() {
               </div>
             </div>
           </div>
-          <div className="col-md-4">
-            <div className="card me-5 ms-3 discount-code mt-3">
+          <div className="col-lg-4 col-md-12 col-12 handle-purchase">
+            <div className="card ms-3 discount-code mt-3">
               <form className="card-body">
                 <label>Mã giảm giá (nếu có)</label>
                 <input
@@ -320,7 +416,7 @@ function Order() {
               </form>
             </div>
 
-            <div className="card me-5 ms-3 mt-3 total-cost">
+            <div className="card ms-3 mt-3 total-cost">
               <div className="card-body">
                 <div className="d-flex justify-content-between">
                   <p>Tạm tính:</p>
@@ -341,7 +437,7 @@ function Order() {
               </div>
             </div>
 
-            <div className="card me-5 ms-3 mt-3 purchase-btn">
+            <div className="card ms-3 mt-3 purchase-btn">
               <button
                 type="button"
                 className="btn btn-success card-body fs-5 fw-bold"

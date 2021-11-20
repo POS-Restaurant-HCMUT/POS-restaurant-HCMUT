@@ -1,7 +1,11 @@
-from django.contrib import admin
 from django.urls import path
-from . import views
-
-# urlpatterns = [
-#     path('', views.index)
-# ]
+from api.views import *
+urlpatterns = [
+    path('api/menu', dish_list, name='dish-list'),
+    path('api/menu/<str:name>', dish_detail, name='dish-detail'),
+    path('api/account/login', customer_login, name='login'),
+    path('api/account/signup', customer_signup, name='signup'),
+    path('api/update-cart', update_cart, name="update_cart"),
+    path('api/dishes-in-cart', dishes_in_cart, name="dishes_in_cart"),
+    path('api/pay', pay, name='pay'),
+]

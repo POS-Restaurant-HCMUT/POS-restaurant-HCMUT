@@ -1,8 +1,10 @@
 import React, { createContext, useState } from "react";
+import { useHistory } from "react-router-dom";
 
 export const AccountContext = createContext()
 
 const AccountContextProvider = ({ children }) => {
+    const history = useHistory();
     const [account, setAccount] = useState({
         userName: '',
         passWord: ''
@@ -21,6 +23,8 @@ const AccountContextProvider = ({ children }) => {
             userName: '',
             passWord: ''
         })
+        history.push("/demo");
+        window.location.reload(false);
     }
 
     //context data

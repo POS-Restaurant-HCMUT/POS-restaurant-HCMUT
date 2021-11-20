@@ -19,7 +19,7 @@ function SignUp() {
   function addCustomerInfo() {
     
     axios
-      .post("http://127.0.0.1:8000/api/account/signup", {
+      .post("api/account/signup", {
         username: username,
         password: password,
         fullName: fullName,

@@ -17,14 +17,15 @@ function Demo() {
     //e.preventDefault();
 
     axios
-      .post("http://127.0.0.1:8000/api/account/login", {
+      .post("api/account/login", {
         username: username,
         password: password,
       })
       .then((res) => {
         accountLogin(res.data["username"], res.data["password"]);
         alert("Sign In successfully");
-        return history.push("/");
+        history.push("/");
+        window.location.reload(false);
       })
       .catch((err) => {
         alert("Incorrect username or password");
