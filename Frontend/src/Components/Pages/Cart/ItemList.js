@@ -3,9 +3,9 @@ import Item from './Item';
 
 export default function ItemList(props) {
   const { products, onAdd, onRemove, deleteItem, onPurchase, handleShow, handleClose } = props;
-  let a = document.getElementsByClassName("check-all-items");
+  //let a = document.getElementsByClassName("check-all-items");
   if (products.length === 0) {
-    a[0].checked = false;
+    //a[0].checked = false;
   }
   
   return (

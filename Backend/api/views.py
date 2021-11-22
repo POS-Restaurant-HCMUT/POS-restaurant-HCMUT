@@ -111,9 +111,18 @@ def update_cart(request):
 
     if request.method == 'POST':
         quantity = data['quantity']
-        cartItem = CartItem(cart=cart, dish=dish, quantity=quantity)
-        cartItem.save()
+        #cartItem = CartItem(cart=cart, dish=dish, quantity=quantity)
+        #cartItem.save()
+        cond = Q(cart=cart) & Q(dish=dish)
+        
+        if (len(list(CartItem.objects.filter(cond).values_list('quantity', flat=True))) == 0):
+            cartItem = CartItem(cart=cart, dish=dish, quantity=quantity)
+            cartItem.save()
+        else:
+            cur_quantity = list(CartItem.objects.filter(cond).values_list('quantity', flat=True))[0]
+            CartItem.objects.filter(cond).update(quantity=quantity + cur_quantity)
         return HttpResponse(status=200)
+
     elif request.method == 'DELETE':
         cond = Q(cart=cart) & Q(dish=dish)
         try:
