@@ -79,3 +79,26 @@
         				}
     			]
 		}
+		
+- Lấy những item có trong cart: (truy cập link http://127.0.0.1:8000/api/account/cart) trả về 1 file Json chứa các item có trong cart của 1 user
+	- Định dạng file Json gửi đi:
+		{
+			"username": "<tài khoản cần lấy item trong cart>",
+			"password": "<mật khẩu của tài khoản>"
+		}
+	- Định dạng của file Json trả về:
+		[
+		    {
+			"id": "<thứ tự của món trong giỏ hàng>",
+			"quantity": <số lượng của món trong giỏ hàng>,
+			"cart": "<tên của cart>",
+			"dish": "<tên của món>"
+		    }
+		    ...
+		    {
+			"id": "<thứ tự của món trong giỏ hàng>",
+			"quantity": <số lượng của món trong giỏ hàng>,
+			"cart": "<tên của cart>",
+			"dish": "<tên của món>"
+		    }
+		]

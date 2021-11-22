@@ -7,8 +7,6 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 
 //window.location.reload(false);
-let cartItems = [];
-let dishes = [];
 let userName = "";
 let passWord = "";
 
@@ -19,89 +17,6 @@ if (saveAccount) {
   passWord = saveAccount.passWord;
 }
 
-axios
-  .post("api/dishes-in-cart", {
-    username: userName,
-    password: passWord,
-  })
-  .then(function (response) {
-    if (response.status === 200) {
-      response.data.forEach(({ dish, quantity }) => {
-        cartItems.push({ dish, quantity });
-      });
-      axios
-        .get("/api/menu")
-        .then((res) => {
-          if (res.status === 200) {
-            res.data.forEach(({ name, desc, img, price }) => {
-              dishes.push({ name, desc, img, price });
-            });
-            for (let i = 0; i < cartItems.length; i++) {
-              for (let j = 0; j < dishes.length; j++) {
-                if (cartItems[i].dish === dishes[j].name) {
-                  cartItems[i] = { ...cartItems[i], dish: dishes[j] };
-                }
-              }
-            }
-          }
-        })
-        .catch((err) => console.log(err));
-    }
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
-let DishesInCart = cartItems;
-
-export const addToCart = (dish, quantity) => {
-  if (userName === "" || passWord === "") {
-    alert("Please sign in to add to cart!");
-  } else {
-    let isDeleted = false;
-    let a = false;
-
-    if (DishesInCart.length > 0) {
-      for (let i of DishesInCart) {
-        if (i.dish.name === dish.name) {
-          i.quantity += quantity;
-          a = true;
-          axios
-            .put("api/update-cart", {
-              username: userName,
-              password: passWord,
-              dish: dish.name,
-              quantity: i.quantity,
-            })
-            .then(function (response) {
-              console.log(response);
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
-          break;
-        }
-      }
-    }
-
-    if (a === false) {
-      DishesInCart.push({ dish, quantity, isDeleted });
-      axios
-        .post("api/update-cart", {
-          username: userName,
-          password: passWord,
-          dish: dish.name,
-          quantity: quantity,
-        })
-        .then(function (response) {
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    }
-  }
-};
-
 function Order() {
   // useEffect(() => {
   //   const json1 = localStorage.getItem("account");
@@ -111,7 +26,45 @@ function Order() {
   //     passWord = saveAccount1.passWord;
   //   }
   // },[])
+  let cartItems = [];
+  const [DishesInCart, getDishesInCart] = useState([]);
+  const [dishes, getListOfDish] = useState([]);
+  const [quantity, setQuantity] = useState([]);
+  useEffect(()=>{
+    axios.get('/api/menu').then((res) => {
+        if (res.status === 200) {
+            getListOfDish(res.data);
+        }
+    }).catch(err => console.log(err));
+  }, []);
+  useEffect(()=>{
+  axios.post("api/dishes-in-cart", {
+    username: userName,
+    password: passWord,
+  })
+  .then(function (response) {
+    if (response.status === 200) {
+      response.data.forEach(({ dish, quantity }) => {
+        cartItems.push({ dish, quantity });
+      });
+      getDishesInCart(cartItems);
+      setQuantity(cartItems);
+    }
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+  }, []);
   
+  for (let i = 0; i < DishesInCart.length; i++) {
+    for (let j = 0; j < dishes.length; j++) {
+      if (DishesInCart[i].dish === dishes[j].name) {
+        console.log("test");
+        DishesInCart[i] = {...DishesInCart[i], dish: dishes[j]};
+      }
+    }
+  }
+  console.log(DishesInCart);
   const history = useHistory();
   useEffect(() => {
     if (userName === "" || passWord === "") {
@@ -138,7 +91,7 @@ function Order() {
       )
     );
   };
-  const [quantity, setQuantity] = useState(DishesInCart);
+  console.log(DishesInCart);
   const [price, setPrice] = useState(0);
 
   const [finalPrice, setFinalPrice] = useState(0);
