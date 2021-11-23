@@ -87,10 +87,33 @@ ul {
 }
 
 .menu-list li:last-child a.active {
-  background-color: red;
+  background-color: white;
+  font-weight: 500;
+  color: tomato;
 }
 
-@media screen and (max-width: 1010px) {
+.menu-list .display-btn {
+  display: block;
+  font-weight: 500;
+  padding: 5px 10px;
+  background-color: #01aacd;
+  transition: all 0.3s ease-in-out;
+  margin-left: 20px;
+  border-radius: 5px;
+}
+
+.menu-list .display-btn:hover {
+  background-color: #fff;
+  border-radius: 5px;
+  color: #000;
+  transition: all 0.5s ease-in-out;
+}
+
+.menu-list .hide-btn {
+  display: none;
+}
+
+@media screen and (max-width: 1100px) {
   .mini-logo {
     width: 40px;
   }
@@ -132,7 +155,11 @@ ul {
   .menu-list li a,
   .menu-list li:last-child a {
     width: 100px;
-    display: block;
+    margin: auto;
+  }
+
+  .menu-list .display-btn {
+    width: 100px;
     margin: auto;
   }
 

@@ -55,7 +55,7 @@ class Order(models.Model):
 
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
-    dish = models.OneToOneField(Dish, on_delete=models.CASCADE)
+    dish = models.ForeignKey(Dish, on_delete=models.CASCADE)
     quantity = models.IntegerField(validators=[MinValueValidator(
         limit_value=0), MaxValueValidator(limit_value=100), ])
 
@@ -67,7 +67,7 @@ class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     quantity = models.IntegerField(validators=[MinValueValidator(
         limit_value=0), MaxValueValidator(limit_value=100), ])
-    dish = models.OneToOneField(Dish, on_delete=models.CASCADE)
+    dish = models.ForeignKey(Dish, on_delete=models.CASCADE)
 
     def get_price(self):
         pass

@@ -1,0 +1,47 @@
+.login .card {
+    width: 700px;
+    border-radius: 1rem;
+}
+
+.login .row .col-md-4, .login .row .col-md-6, .login .row .col-md-8 {
+    padding-right: 0 !important;
+}
+
+.login .card .card-body {
+    border-radius: 1rem;
+}
+
+.login {
+    margin-top: 3rem;
+}
+
+.login .btn-warning {
+	color: #f7f9fb;
+	font-size: large;
+	font-weight: 500;
+	background-color: tomato;
+    border-color: tomato;
+}
+
+.login .btn-warning:hover {
+    background-color: green;
+    border-color: green;
+}
+
+.login .form-control {
+	border-width: 2.3px;
+}
+
+.login .form-check {
+    padding-left: 0 !important;
+}
+
+.login a {
+    text-decoration: none;
+}
+
+@media screen and (max-width: 710px) {
+	body.login {
+		margin: 50px;
+	}
+}

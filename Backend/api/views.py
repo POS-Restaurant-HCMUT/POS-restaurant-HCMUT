@@ -8,6 +8,21 @@ from django.core import serializers as se
 from .serializer import *
 from .models import *
 
+@csrf_exempt
+def dishes_in_cart(request):
+    data = JSONParser().parse(request)
+    username=data['username']
+    password=data['password']
+    isValid = Customer.objects.filter(
+            Q(username=username) & Q(password=password))
+    if len(isValid) == 0:
+        return HttpResponse(401)
+
+    cart = Cart.objects.get(owner=username)
+    cart_items = CartItem.objects.filter(cart=cart)
+    if request.method == 'POST':
+        serializers = CartItemSerializer(cart_items, many=True)
+        return JsonResponse(serializers.data, safe=False, json_dumps_params={'ensure_ascii': False})
 
 @csrf_exempt
 def dish_list(request):
@@ -77,28 +92,38 @@ def customer_signup(request):
                                     fullName=data['fullName'], 
                                     email=data['email'], 
                                     phone=data['phone'])
+            owner = Customer.objects.get(username=data['username'])
+            Cart(owner=owner).save()
             return HttpResponse(status=200)
 
 @csrf_exempt
 def update_cart(request):
+    print(request)
     data = JSONParser().parse(request)
     username=data['username']
     password=data['password']
     isValid = Customer.objects.filter(
             Q(username=username) & Q(password=password))
-    
-    if len(isValid) != 0:
+    if len(isValid) == 0:
         return HttpResponse(401)
-
-    
 
     cart = Cart.objects.get(owner=username)
     dish = Dish.objects.get(name=data['dish'])
+
     if request.method == 'POST':
         quantity = data['quantity']
-        cartItem = CartItem(cart=cart, dish=dish, quantity=quantity)
-        cartItem.save()
+        #cartItem = CartItem(cart=cart, dish=dish, quantity=quantity)
+        #cartItem.save()
+        cond = Q(cart=cart) & Q(dish=dish)
+        
+        if (len(list(CartItem.objects.filter(cond).values_list('quantity', flat=True))) == 0):
+            cartItem = CartItem(cart=cart, dish=dish, quantity=quantity)
+            cartItem.save()
+        else:
+            cur_quantity = list(CartItem.objects.filter(cond).values_list('quantity', flat=True))[0]
+            CartItem.objects.filter(cond).update(quantity=quantity + cur_quantity)
         return HttpResponse(status=200)
+
     elif request.method == 'DELETE':
         cond = Q(cart=cart) & Q(dish=dish)
         try:

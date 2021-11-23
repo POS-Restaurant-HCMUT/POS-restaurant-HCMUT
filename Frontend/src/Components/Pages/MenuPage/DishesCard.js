@@ -1,8 +1,32 @@
 import { useState } from 'react';
-import {addToCart} from '../Cart/Cart'
 import './DishesCard.css';
+import axios from "axios";
+let userName = "";
+let passWord = "";
 
+const json = localStorage.getItem("account");
+const saveAccount = JSON.parse(json);
+if (saveAccount) {
+  userName = saveAccount.userName;
+  passWord = saveAccount.passWord;
+}
 
+const addToCart = (dish, quantity) => {
+    if (userName === "" || passWord === "") {
+      alert("Please sign in to add to cart!");
+    } else {
+        axios.post("api/update-cart", {
+            username: userName,
+            password: passWord,
+            dish: dish.name,
+            quantity: quantity,
+        }).then(function (response) {
+            console.log(response);
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }
+}
 export function DishesCard(props) {
     const [quantity, setQuantity] = useState(1);
     

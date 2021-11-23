@@ -105,3 +105,46 @@
 .div-purchase {
     background-color:transparent;
 }
+
+.abcd-e .hide-des {
+    display: none;
+}
+
+.cart-left {
+    padding-left: 3rem;
+}
+
+.handle-purchase {
+    padding-right: 2.5rem;
+}
+
+@media screen and (max-width: 990px) {
+    .handle-purchase {
+        margin-left: 2rem;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    #header-cart .another-desc {
+        display: none;
+    }
+    .abcd-e .item-price-des, .abcd-e .qty-btn, .abcd-e .item-total-price-des {
+        margin-left: 2rem;
+        margin-bottom: 0.5rem;
+    }
+    .abcd-e .delete-item {
+        margin-bottom: 0.5rem;
+    }
+    .abcd-e .hide-des {
+        display: inline-block;
+        font-weight: bold;
+        margin-right: 0.5rem;
+    }
+    .cart-left {
+        padding-left: 1.5rem;
+    }
+    .handle-purchase {
+        padding-right: 1rem;
+        margin-left: 0;
+    }
+}
