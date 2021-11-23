@@ -42,7 +42,7 @@ export function DishesCard(props) {
     }
 
     return (
-        <div class="col-3 ">
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12 ">
             <div class="card">
                 <img src={props.dish.img} class="card-img-top" alt={props.dish.name} />
                 <div class="card-body">

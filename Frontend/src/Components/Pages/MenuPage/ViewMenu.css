@@ -65,3 +65,10 @@
 .active-content {
   display: block;
 }
+
+@media screen and (max-width: 850px) {
+  .bloc-tabs {
+    flex-direction: column;
+    margin: 1rem 2rem 0 2rem;
+  }
+}
