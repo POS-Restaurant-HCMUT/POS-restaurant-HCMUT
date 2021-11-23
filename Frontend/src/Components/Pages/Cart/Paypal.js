@@ -1,7 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom'
 import axios from 'axios';
-import { data } from 'jquery';
 // import { PayPalButton } from "react-paypal-button-v2";
 
 const PayPalButton = window.paypal.Buttons.driver("react", { React, ReactDOM });
@@ -59,7 +58,7 @@ export default function Paypal(props) {
     }
 
     return (
-        <PayPalButton
+        <PayPalButton style={{layout:'horizontal', tagline:false, color:'gold', height:55, label:'buynow'}}
             createOrder={(data, actions) => createOrder(data, actions)}
             onApprove={(data, actions) => onApprove(data, actions)}
             onCancel={(data, actions) => onCancel(data, actions)}

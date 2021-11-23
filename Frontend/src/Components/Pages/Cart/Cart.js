@@ -105,8 +105,6 @@ function Order() {
 
   const [codeAdded, setCodeAdded] = useState("");
 
-  const [checkout, setCheckout] = useState(false);
-
   const onAdd = (product) => {
     const item = quantity.find((x) => x.dish.name === product.dish.name);
     setQuantity(
@@ -392,11 +390,8 @@ function Order() {
                 </div>
               </div>
             </div>
-            <div className="card me-5 ms-3 mt-3 div-purchase" onClick={() => { if (finalPrice > 0) setCheckout(true) }}>
-              {/* {checkout ? <Paypal amount={finalPrice} style={{ backgroundColor: '#ffefec', borderRadius: '25px' }} /> :
-                <button type="button" className="btn btn-success card-body fs-5 fw-bold purchase-btn"
-                >Thanh toán ngay</button>} */}
-                <Paypal amount={(price * 110) / 100 - (price - finalPrice)} />
+            <div className="card me-5 ms-3 mt-3 div-purchase">
+              <Paypal amount={(price * 110) / 100 - (price - finalPrice)} />
             </div>
           </div>
         </div>

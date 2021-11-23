@@ -8,5 +8,5 @@ urlpatterns = [
     path('api/update-cart', update_cart, name="update_cart"),
     path('api/dishes-in-cart', dishes_in_cart, name="dishes_in_cart"),
     path('api/pay', pay, name='pay'),
-    path('api/payment', payment, name='payment'),
+    path('api/payment', testPayment, name='payment'),
 ]

@@ -172,7 +172,7 @@ def pay(request):
     return HttpResponse(status=200)
 
 @csrf_exempt
-def payment(request):
+def testPayment(request):
     data = JSONParser().parse(request)
     print(data)
     return HttpResponse(status=200) 
