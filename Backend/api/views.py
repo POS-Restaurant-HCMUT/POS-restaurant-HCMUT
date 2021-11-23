@@ -46,6 +46,7 @@ def dish_list(request):
 def dish_detail(request, name):
     try:
         dish = Dish.objects.get(pk=name)
+        print(dish)
     except Dish.DoesNotExist:
         return HttpResponse(status=401)
 
@@ -150,9 +151,9 @@ def pay(request):
     print("\n\n")
     isValid = Customer.objects.filter(
             Q(username=username) & Q(password=password))
-    
-    if len(isValid) != 0:
-        return HttpResponse(401)
+    print(isValid)
+    if len(isValid) == 0:
+        return HttpResponse(status=401)
     
     owner = Customer.objects.get(username=username)
     print("done\n\n\n")
@@ -170,4 +171,8 @@ def pay(request):
         orderItem.save()
     return HttpResponse(status=200)
 
-    
+@csrf_exempt
+def testPayment(request):
+    data = JSONParser().parse(request)
+    print(data)
+    return HttpResponse(status=200) 

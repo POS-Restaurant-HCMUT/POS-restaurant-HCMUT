@@ -8,6 +8,8 @@ import Footer from "./Components/Footer/Footer";
 import ViewMenu from "./Components/Pages/MenuPage/ViewMenu";
 import Cart from "./Components/Pages/Cart/Cart";
 import AboutUs from "./Components/Pages/AboutUs";
+import SuccessPayment from './Components/Pages/SuccessPayment';
+import FailPayment from './Components/Pages/FailPayment';
 import SignUp from "./Components/Pages/Authenticate/SignUp";
 import AccountContextProvider from "./context/accountContext";
 
@@ -24,6 +26,8 @@ function App() {
             <Route path="/about-us" exact component={AboutUs} />
             <Route path="/demo" exact component={Demo} />
             <Route path="/SignUp" exact component={SignUp} />
+            <Route path="/success" exact component={SuccessPayment} />
+            <Route path="/fail" exact component={FailPayment} />
           </Switch>
           <Footer />
         </AccountContextProvider>

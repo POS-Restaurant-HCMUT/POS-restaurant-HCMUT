@@ -3,6 +3,7 @@ import "./cart.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ItemList from "./ItemList";
 import DiscountCode from "./discountCode";
+import Paypal from './Paypal'
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 
@@ -30,37 +31,37 @@ function Order() {
   const [DishesInCart, getDishesInCart] = useState([]);
   const [dishes, getListOfDish] = useState([]);
   const [quantity, setQuantity] = useState([]);
-  useEffect(()=>{
+  useEffect(() => {
     axios.get('/api/menu').then((res) => {
-        if (res.status === 200) {
-            getListOfDish(res.data);
-        }
+      if (res.status === 200) {
+        getListOfDish(res.data);
+      }
     }).catch(err => console.log(err));
   }, []);
-  useEffect(()=>{
-  axios.post("api/dishes-in-cart", {
-    username: userName,
-    password: passWord,
-  })
-  .then(function (response) {
-    if (response.status === 200) {
-      response.data.forEach(({ dish, quantity }) => {
-        cartItems.push({ dish, quantity });
+  useEffect(() => {
+    axios.post("api/dishes-in-cart", {
+      username: userName,
+      password: passWord,
+    })
+      .then(function (response) {
+        if (response.status === 200) {
+          response.data.forEach(({ dish, quantity }) => {
+            cartItems.push({ dish, quantity });
+          });
+          getDishesInCart(cartItems);
+          setQuantity(cartItems);
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
       });
-      getDishesInCart(cartItems);
-      setQuantity(cartItems);
-    }
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
   }, []);
-  
+
   for (let i = 0; i < DishesInCart.length; i++) {
     for (let j = 0; j < dishes.length; j++) {
       if (DishesInCart[i].dish === dishes[j].name) {
         console.log("test");
-        DishesInCart[i] = {...DishesInCart[i], dish: dishes[j]};
+        DishesInCart[i] = { ...DishesInCart[i], dish: dishes[j] };
       }
     }
   }
@@ -103,6 +104,8 @@ function Order() {
   const [discountData] = useState(DiscountCode);
 
   const [codeAdded, setCodeAdded] = useState("");
+
+  const [orderItem, setOrderItem] = useState([]);
 
   const onAdd = (product) => {
     const item = quantity.find((x) => x.dish.name === product.dish.name);
@@ -213,22 +216,31 @@ function Order() {
     if (checked === true) {
       setPrice(price + product.dish.price * product.quantity);
       setFinalPrice(finalPrice + product.dish.price * product.quantity);
+
+      let temp_arr = JSON.parse(JSON.stringify(quantity));
+      var t = temp_arr.map((x) =>
+        x.dish.name === product.dish.name ? { ...item, check: true } : x
+      )
       setQuantity(
-        quantity.map((x) =>
-          x.dish.name === product.dish.name ? { ...item, check: true } : x
-        )
+        t
       );
+      setOrderItem(t.filter((item) => item?.check === true));
+      console.log(orderItem);
     } else {
       a[0].checked = false;
       setPrice(price - product.dish.price * product.quantity);
       setFinalPrice(finalPrice - product.dish.price * product.quantity);
+
+      let temp_arr = JSON.parse(JSON.stringify(quantity));
+      let t = temp_arr.map((x) =>
+        x.dish.name === product.dish.name
+          ? { ...item, check: !item.check }
+          : x
+      )
       setQuantity(
-        quantity.map((x) =>
-          x.dish.name === product.dish.name
-            ? { ...item, check: !item.check }
-            : x
-        )
+        t
       );
+      setOrderItem(t.filter((item) => item?.check === true));
     }
 
     for (let i of b) {
@@ -385,18 +397,12 @@ function Order() {
                     <div>Tổng tiền:</div>
                     <div>(Bao gồm VAT)</div>
                   </div>
-                  <p>{(price * 110) / 100 - (price - finalPrice)} VNĐ</p>
+                  <p name="finalPr">{(price * 110) / 100 - (price - finalPrice)} VNĐ</p>
                 </div>
               </div>
             </div>
-
-            <div className="card ms-3 mt-3 purchase-btn">
-              <button
-                type="button"
-                className="btn btn-success card-body fs-5 fw-bold"
-              >
-                Thanh toán ngay
-              </button>
+            <div className="card me-5 ms-3 mt-3 div-purchase">
+              <Paypal amount={(price * 110) / 100 - (price - finalPrice)} orderItem={orderItem} />
             </div>
           </div>
         </div>
