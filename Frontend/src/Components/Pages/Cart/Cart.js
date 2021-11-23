@@ -221,11 +221,8 @@ function Order() {
       var t = temp_arr.map((x) =>
         x.dish.name === product.dish.name ? { ...item, check: true } : x
       )
-      setQuantity(
-        t
-      );
+      setQuantity(t);
       setOrderItem(t.filter((item) => item?.check === true));
-      console.log(orderItem);
     } else {
       a[0].checked = false;
       setPrice(price - product.dish.price * product.quantity);
@@ -237,9 +234,7 @@ function Order() {
           ? { ...item, check: !item.check }
           : x
       )
-      setQuantity(
-        t
-      );
+      setQuantity(t);
       setOrderItem(t.filter((item) => item?.check === true));
     }
 
@@ -278,6 +273,7 @@ function Order() {
       setPrice(0);
       setFinalPrice(0);
     }
+    setOrderItem(quantity.filter((item) => item?.check === true));
   };
   console.log(DishesInCart);
   if (DishesInCart.length === 0) {
