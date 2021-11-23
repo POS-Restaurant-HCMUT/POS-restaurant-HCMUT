@@ -105,6 +105,8 @@ function Order() {
 
   const [codeAdded, setCodeAdded] = useState("");
 
+  const [orderItem, setOrderItem] = useState([]);
+
   const onAdd = (product) => {
     const item = quantity.find((x) => x.dish.name === product.dish.name);
     setQuantity(
@@ -214,22 +216,31 @@ function Order() {
     if (checked === true) {
       setPrice(price + product.dish.price * product.quantity);
       setFinalPrice(finalPrice + product.dish.price * product.quantity);
+
+      let temp_arr = JSON.parse(JSON.stringify(quantity));
+      var t = temp_arr.map((x) =>
+        x.dish.name === product.dish.name ? { ...item, check: true } : x
+      )
       setQuantity(
-        quantity.map((x) =>
-          x.dish.name === product.dish.name ? { ...item, check: true } : x
-        )
+        t
       );
+      setOrderItem(t.filter((item) => item?.check === true));
+      console.log(orderItem);
     } else {
       a[0].checked = false;
       setPrice(price - product.dish.price * product.quantity);
       setFinalPrice(finalPrice - product.dish.price * product.quantity);
+
+      let temp_arr = JSON.parse(JSON.stringify(quantity));
+      let t = temp_arr.map((x) =>
+        x.dish.name === product.dish.name
+          ? { ...item, check: !item.check }
+          : x
+      )
       setQuantity(
-        quantity.map((x) =>
-          x.dish.name === product.dish.name
-            ? { ...item, check: !item.check }
-            : x
-        )
+        t
       );
+      setOrderItem(t.filter((item) => item?.check === true));
     }
 
     for (let i of b) {
@@ -391,7 +402,7 @@ function Order() {
               </div>
             </div>
             <div className="card me-5 ms-3 mt-3 div-purchase">
-              <Paypal amount={(price * 110) / 100 - (price - finalPrice)} />
+              <Paypal amount={(price * 110) / 100 - (price - finalPrice)} orderItem={orderItem} />
             </div>
           </div>
         </div>

@@ -151,9 +151,9 @@ def pay(request):
     print("\n\n")
     isValid = Customer.objects.filter(
             Q(username=username) & Q(password=password))
-    
-    if len(isValid) != 0:
-        return HttpResponse(401)
+    print(isValid)
+    if len(isValid) == 0:
+        return HttpResponse(status=401)
     
     owner = Customer.objects.get(username=username)
     print("done\n\n\n")
