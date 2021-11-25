@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import './DishesCard.css';
 import axios from "axios";
+import { store } from 'react-notifications-component';
+
 let userName = "";
 let passWord = "";
 
@@ -11,25 +13,54 @@ if (saveAccount) {
   passWord = saveAccount.passWord;
 }
 
-const addToCart = (dish, quantity) => {
-    if (userName === "" || passWord === "") {
-      alert("Please sign in to add to cart!");
-    } else {
-        axios.post("api/update-cart", {
-            username: userName,
-            password: passWord,
-            dish: dish.name,
-            quantity: quantity,
-        }).then(function (response) {
-            console.log(response);
-        }).catch(function (error) {
-            console.log(error);
-        });
-    }
-}
 export function DishesCard(props) {
     const [quantity, setQuantity] = useState(1);
     
+    const addToCart = (dish, quantity) => {
+        if (userName === "" || passWord === "") {
+          alert("Please sign in to add to cart!");
+        } else {
+            axios.post("api/update-cart", {
+                username: userName,
+                password: passWord,
+                dish: dish.name,
+                quantity: quantity,
+            }).then(function (response) {
+                console.log(response);
+                store.addNotification({
+                    title: "Notify",
+                    message: `Successfully added ${dish.name} to your cart!`,
+                    type: "info",
+                    insert: "top",
+                    container: "bottom-left",
+                    animationIn: ["animate__animated", "animate__fadeIn"],
+                    animationOut: ["animate__animated", "animate__fadeOut"],
+                    dismiss: {
+                      duration: 2000,
+                      onScreen: true
+                    },
+                    width: 300
+                  });
+            }).catch(function (error) {
+                store.addNotification({
+                    title: "Error",
+                    message: `Add ${dish.name} to your cart fail!`,
+                    type: "danger",
+                    insert: "top",
+                    container: "bottom-left",
+                    animationIn: ["animate__animated", "animate__fadeIn"],
+                    animationOut: ["animate__animated", "animate__fadeOut"],
+                    dismiss: {
+                      duration: 2000,
+                      onScreen: true
+                    },
+                    width: 300
+                  });
+                console.log(error);
+            });
+        }
+    } 
+
     let setQuantityUtl = (quan)=>{
         setQuantity(quan);
         if(quan<1){

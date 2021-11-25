@@ -12,10 +12,13 @@ import SuccessPayment from './Components/Pages/SuccessPayment';
 import FailPayment from './Components/Pages/FailPayment';
 import SignUp from "./Components/Pages/Authenticate/SignUp";
 import AccountContextProvider from "./context/accountContext";
+import ReactNotification from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
 
 function App() {
   return (
     <div className="container1">
+      <ReactNotification />
       <Router>
         <AccountContextProvider>
           <Navbar />
