@@ -53,6 +53,7 @@
 
 .page-aboutUs .card {
   width: 600px;
+  margin-top: 2rem;
 }
 
 .page-aboutUs {
@@ -81,5 +82,14 @@
 @media screen and (max-width: 600px) {
   .page-heading h1 {
     font-size: 3rem;
+  }
+  .page-aboutUs .card {
+    width: 400px;
+  }
+  .page-aboutUs h1 {
+    font-size: 3rem;
+  }
+  .page-aboutUs p {
+    font-size: 1rem;
   }
 }
